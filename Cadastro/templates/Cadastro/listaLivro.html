@@ -1,0 +1,49 @@
+{% extends 'Pages/modelo.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+    <hr>
+    <h3>Livros resgistrados</h3>
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'cadastro-livro' %}" class="btn btn-primary btn-sm float-right">Cadastrar Livro</a>
+    {% endif %}
+    <hr>
+    <div class="table table-reponsive">
+        <table class="table table-striped">
+            <tr>
+                <th>Gênero</th>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Ano</th>
+                {% if request.user.is_authenticated %}
+                <th>Opções</th>  
+                {% endif %} 
+            </tr>
+
+            {% for livro in object_list %}
+            <tr>
+                <td>{{ livro.local }}</td>
+                <td>{{ livro.titulo }}</td>
+                <td>{{ livro.autor }}</td>
+                <td>{{ livro.ano }}</td>
+
+                {% if request.user.is_authenticated %}
+
+                <td>
+                    <a href="{% url 'editar-livro' livro.pk %}" class="btn btn-warning btn-sm">Editar</a>                    
+                    <a href="{% url 'excluir-livro' livro.pk %}" class="btn btn-danger btn-sm">Excluir</a>
+
+                </td>
+
+                {% endif %}
+            </tr>
+            {% empty %}
+
+            <tr>
+                <td colspan="3">Nenhum livro cadastrado</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

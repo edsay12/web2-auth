@@ -1,0 +1,134 @@
+{% load static %}
+
+<!doctype html>
+<html lang="pt-br" class="h-100">   <!--h-100: Significa que a altura é int, ou seja, tela int-->
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Disc.Beatriz Silva">
+    
+    {% block titulo %}
+    <title>Home</title>
+    {% endblock %}
+
+    <!--Icone das abas-->
+    <link href="{% static 'img/logoPage.porj' %}" type="image/x-icon">
+
+    <!--Importar Bootstrap CSS-->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!--Importar CSS-->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+  </head>
+  
+  <body class="d-flex flex-column h-100">
+    
+<header>
+  <!-- Fixed navbar -->
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Biblioteca</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!--Menu-->
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+
+          <!--Home-->
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
+          </li>
+
+          {% if request.user.is_authenticated %}
+
+          <!--Cadastro (Dropdown)-->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Menu
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'listar-livro' %}">Livro</a></li>
+              <li><a class="dropdown-item" href="{% url 'listar-local' %}">Gênero</a></li>
+              <li><a class="dropdown-item" href="{% url 'listar-artigo' %}">Artigo</a></li>
+              <li><a class="dropdown-item" href="{% url 'listar-computer' %}">Computadores</a></li>
+              <li><a class="dropdown-item" href="{% url 'registrar' %}">Novo Usuário</a></li>
+            </ul>
+          </li>
+
+          {% else %}
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Menu
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'listar-livro' %}">Livro</a></li>
+              <li><a class="dropdown-item" href="{% url 'listar-local' %}">Gênero</a></li>
+              <li><a class="dropdown-item" href="{% url 'listar-artigo' %}">Artigo</a></li>
+              <li><a class="dropdown-item" href="{% url 'listar-computer' %}">Computadores</a></li>
+            </ul>
+          </li>
+
+          {% endif %}
+
+
+          {% if request.user.is_authenticated %}
+
+          <!--Usuario (Dropdown)
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Usuário
+            </a>
+                <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'logout' %}">Sair</a></li>
+            </ul>
+          </li>-->
+
+          <!--Sair-->
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Sair</a>
+          </li>
+
+          {% else %}
+          
+          <!--Login-->
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+          {% endif %}
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="flex-shrink-0">
+  <div class="container">
+    <br>
+    <!--Inicio-->
+    {% block conteudo %}
+    <h1 class="mt-2">Bem vindo</h1>
+    <!--<p class="lead">Pin a footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added with <code class="small">padding-top: 60px;</code> on the <code class="small">main &gt; .container</code>.</p>
+    <p>Back to <a href="/docs/5.1/examples/sticky-footer/">the default sticky footer</a> minus the navbar.</p>-->
+    
+    {% endblock %}
+    <!--Fim-->
+    </div>
+</main>
+
+<footer class="footer mt-auto py-3 bg-dark">
+  <div class="container">
+    <span class="text-muted">Desenvolvimento WEB II</span>
+  </div>
+</footer>
+
+
+    <script src="{% static 'javaScript/bootstrap.min.js' %}"></script>
+
+      
+  </body>
+</html>
